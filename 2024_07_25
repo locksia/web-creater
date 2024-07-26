@@ -1,4 +1,4 @@
-
+```HTML
 <!DOCTYPE html>
 <html lang="ko">
    <head>
@@ -19,3 +19,4 @@
       <p>웹 개발 전문가 양성 교육</p>
    </body>
 </html>
+```
