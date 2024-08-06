@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>할 일 입력</h1>
+    <p>
+        할일: <input type="text" class="title">
+        <button id="saveBtn">SAVE</button>
+    </p>
+    <table class="resultArea">
+        <td>
+            <tr>
+
+            </tr>
+        </td>
+    </table>
+
+    <script>
+        var title = document.querySelector(".title");
+        var saveBtn = document.querySelector("#saveBtn");
+        var resultArea = document.querySelector(".resultArea");
+
+        var todoList = [
+            {no:1, title:"first", done:false},
+            {no:2, title:"second", done:true},
+            {no:3, title:"third", done:true},
+        ];
+        var seq = 4;
+
+        function drawList() {
+            resultArea.innerHTML = "";
+            todoList.forEach(function(todo){
+                var liTag = document.createElement("li");
+                var checkbox = document.createElement("input");
+                var delBtn = document.createElement("button");
+                var limain = document.createElement("span");
+
+                liTag.style.listStyle = "none";
+                limain.innerText = " " + todo.title + "   ";
+                checkbox.setAttribute("type", "checkbox");
+                checkbox.removeAttribute("checked");
+                if(todo.done) {
+                    checkbox.setAttribute("checked", "checked");
+                    limain.setAttribute("class", "okTitle");
+                }
+
+
+                delBtn.innerText = "Delete";
+                delBtn.addEventListener("click", function(event){
+                    var idx = todoList.findIndex(function(t){
+                        return t.no === todo.no;
+                    })
+                    if(idx !== -1) {
+                        todoList.splice(idx, 1);
+                    }
+                    drawList();
+                })
+                liTag.appendChild(checkbox);
+                liTag.appendChild(limain);
+                liTag.appendChild(delBtn);
+                resultArea.appendChild(liTag);
+            });
+        }
+        drawList();
+
+        function append(){
+            todoList.push({no: seq++, title: title.value, done: false});
+            title.value = "";
+            title.focus();
+        }
+        
+        saveBtn.onclick = function(){
+            append();
+            drawList();
+        }
+    </script>
+</body>
+</html>
